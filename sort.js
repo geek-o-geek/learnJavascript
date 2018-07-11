@@ -10,3 +10,9 @@ values.sort((a,b)=>
              } );
 
 // suppose values is an array to be sorted
+
+
+arr = [1, 21, 32, 6, 8, 9];
+arr.sort(function(a, b){return b - a});
+
+console.log(arr[1]);
