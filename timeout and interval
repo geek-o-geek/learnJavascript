@@ -1,0 +1,11 @@
+setTimeout( () => {
+console.log("hello");
+}, 1000)
+
+o/p=> hello 
+
+setInterval( () => {
+console.log("hello");
+}, 1000)
+
+o/p=> hello,hello.......n 
