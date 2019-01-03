@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Tic Tac Toe</title>
+      <style>
+         .tic-tac-toe-box{
+         float: left; 
+         padding: 5px 5px 5px 5px; 
+         border: 1px solid black; 
+         list-style-type: none; 
+         width:50px; 
+         max-width:50px; 
+         min-height: 25px;
+         text-align: center;
+         }
+      </style>
+   </head>
+   <body>
+      <ul>
+         <div>
+            <a href="javascript:void(0)" onclick="putSign(0, 0)">
+               <li class="tic-tac-toe-box" id="li00"></li>
+            </a>
+            <a href="javascript:void(0)" onclick="putSign(0, 1)">
+               <li class="tic-tac-toe-box" id="li01"></li>
+            </a>
+            <a href="javascript:void(0)" onclick="putSign(0, 2)">
+               <li class="tic-tac-toe-box" id="li02"></li>
+            </a>
+         </div>
+         </br>
+         </br>
+         <div>
+            <a href="javascript:void(0)" onclick="putSign(1, 0)">
+               <li class="tic-tac-toe-box" id="li10"></li>
+            </a>
+            <a href="javascript:void(0)" onclick="putSign(1, 1)">
+               <li class="tic-tac-toe-box" id="li11"></li>
+            </a>
+            <a href="javascript:void(0)" onclick="putSign(1, 2)">
+               <li class="tic-tac-toe-box" id="li12"></li>
+            </a>
+         </div>
+         </br>
+         </br>
+         <div>
+            <a href="javascript:void(0)" onclick="putSign(2, 0)">
+               <li class="tic-tac-toe-box" id="li20"></li>
+            </a>
+            <a href="javascript:void(0)" onclick="putSign(2, 1)">
+               <li class="tic-tac-toe-box" id="li21"></li>
+            </a>
+            <a href="javascript:void(0)" onclick="putSign(2, 2)">
+               <li class="tic-tac-toe-box" id="li22"></li>
+            </a>
+         </div>
+      </ul>
+      </br></br>
+      <a href="javascript:void(0)" onclick="clearSign()" style="margin-top: 20px" id="reset">Reset</a>
+      
+    </br><p id="current"></p>
+   </body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+   $(function(){
+      $("#reset").hide()
+   })
+   var counter = 0, index, arr = [[], [], []], turn_value = '', current_value = ''; 
+
+   function init(){
+    counter = 0;
+    arr = [[], [], []]; 
+    turn_value = ''
+    current_value = ''
+    
+   }
+
+   function putSign(row, col){
+     $("#reset").show()
+     if($("#li"+row+col).text()) return
+     counter++;
+     var sign_arr = ['X', 'O']
+     var rand_sign = sign_arr[Math.floor(Math.random() * sign_arr.length)];
+     
+     if(counter==1){
+       turn_value = (rand_sign == 'X')? 'O': 'X'
+       $("#li"+row+col).text(rand_sign)
+       index = sign_arr.indexOf(rand_sign)
+       current_value = rand_sign
+     }
+     else{
+       turn_value = sign_arr[+index]
+       index = !index
+       $("#li"+row+col).text(sign_arr[+index])
+       current_value = sign_arr[+index]
+     }
+     $("#current").text("Your turn: "+ turn_value)
+     arr[row][col] = current_value
+    
+     for(var i=0; i<3; i++){
+       var prev_1 = '', prev_2 = '', count_1 = 0, count_2 = 0;
+       for(var j=0; j<3; j++){
+          if((arr[i][j] == prev_1) && prev_1) count_1++
+          else if((arr[j][i] == prev_2) && prev_2) count_2++
+
+          prev_1 = arr[i][j]
+          prev_2 = arr[j][i]  
+       }
+       
+       if(count_1 == 2 || count_2 == 2 || ((arr[0][0] == arr[1][1]) && (arr[1][1]== arr[2][2]) && arr[1][1]) || ((arr[0][2] == arr[1][1]) && arr[1][1] && (arr[1][1]== arr[2][0]))) {
+        setTimeout(function(){
+          alert(current_value + " Won")
+          clearSign()
+         }, 500)
+         return;
+       }
+     }
+   }
+
+   function clearSign(){
+    $("#reset").hide()
+    $("#current").text("")
+     init()
+     for(i=0; i<3; i++){
+       for(j=0; j<3; j++)
+        $("#li"+i+j).text('')
+     }
+   }
+</script>
