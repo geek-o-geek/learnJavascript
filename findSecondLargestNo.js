@@ -20,4 +20,4 @@ arr.forEach(elem => {
   diff = temp
 })
 
-console.log(noToFind)
+console.log("second largest no. is: ", noToFind)
